@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('fecha_gasto');
             $table->decimal('monto');
             $table->string('descripcion');
+            $table->string('name');
             $table->timestamps();
 
             $table->foreign('id_categoria')->references('id')->on('categorias');

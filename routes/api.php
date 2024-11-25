@@ -5,6 +5,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriasController;
+use App\Http\Controllers\GastosController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UsuariosControler;
 use Illuminate\Http\Request;
@@ -40,6 +41,13 @@ Route::delete('/categories/{id}', [CategoriasController::class, 'deleteAPI']);
 Route::put('/categories/{id}', [CategoriasController::class, 'updateAPI']);
 
 Route::post('/register', [AuthController::class, 'register']);
+
+Route::middleware('auth:sanctum')->post('/gastos/create', [GastosController::class, 'storeAPI']);
+Route::middleware('auth:sanctum')->put('/gastos/{id}', [GastosController::class, 'updateAPI']);
+Route::middleware('auth:sanctum')->get('/gastos/getall', [GastosController::class, 'indexAPI']);
+Route::middleware('auth:sanctum')->get('/gastos/get/{id}', [GastosController::class, 'getAPI']);
+Route::middleware('auth:sanctum')->delete('/gastos/{id}', [GastosController::class, 'deleteAPI']);
+
 
 Route::middleware('auth:sanctum')->get('/verifyAdmin', [AdminController::class, 'index']);
 Route::middleware('auth:sanctum')->get('/getUsers', [UsuariosControler::class, 'indexAPI']);

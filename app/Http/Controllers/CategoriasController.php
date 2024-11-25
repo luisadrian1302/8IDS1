@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Log;
 class CategoriasController extends Controller
 {
     //
-     // Mostrar la lista de categorías
+    //  Mostrar la lista de categorías]
+
+    
      public function index()
      {
          $categories = Categorias::all();
