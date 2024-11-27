@@ -12,27 +12,34 @@ class CategoriasController extends Controller
     //  Mostrar la lista de categorías]
 
     
-     public function index()
+     public function index(Request $request)
      {
-         $categories = Categorias::all();
+
+        $user = $request->user();
+        $categories = Categorias::all();
+        Log::info(' El usuario '.$user->name.' con el rol '.$user->rol.' acaba de obtener todas las categorias ');
+
          return view('categories.index', compact('categories'));
      }
  
-     public function indexAPI()
+     public function indexAPI(Request $request)
      {
-         Log::info('Iniciando el proceso en el controlador Index categoria.');
+        $user = $request->user();
          $categories = Categorias::all();
-         Log::info('Proceso finalizado.');
+
+        Log::info(' El usuario '.$user->name.' con el rol '.$user->rol.' acaba de obtener todas las categorias ');
+
          return $categories;
      }
 
-     public function getAPI($id)
+     public function getAPI(Request $request, $id)
      {
         try {
-             Log::info('Iniciando el proceso de obtener una categoria');
+            $user = $request->user();
+
 
             $categoria = Categorias::findOrFail($id);
-            Log::info('Proceso finalizado.');
+            Log::info(' El usuario '.$user->name.' con el rol '.$user->rol.' acaba de obtener la categoria con el id '.$id);
 
             return $categoria;
             //code...
@@ -56,7 +63,8 @@ class CategoriasController extends Controller
      // Guardar una nueva categoría
     public function storeAPI(Request $request)
     {
-        Log::info('Iniciando el proceso de crear categoria');
+        $user = $request->user();
+
 
         $request->validate([
             'name' => 'required|string|max:255'
@@ -65,7 +73,9 @@ class CategoriasController extends Controller
         Categorias::create([
             'nombre' => $request->name
         ]);
-        Log::info('Proceso finalizado.');
+        
+        Log::info(' El usuario '.$user->name.' con el rol '.$user->rol.' acaba de crear una nueva categoria ');
+
 
         return "Ok";
     }
@@ -74,7 +84,8 @@ class CategoriasController extends Controller
     {
 
         try {
-            Log::info('Iniciando el proceso de actualizar categoria');
+            $user = $request->user();
+
             
             $request->validate([
                 'name' => 'required|string|max:255'
@@ -85,7 +96,9 @@ class CategoriasController extends Controller
             $categoria->update([
                 'nombre' => $request->name
             ]);
-            Log::info('Proceso finalizado.');
+
+            Log::info(' El usuario '.$user->name.' con el rol '.$user->rol.' acaba de actualizar la categoria con el id '.$id);
+           
 
 
             // return "Ok";
@@ -102,14 +115,16 @@ class CategoriasController extends Controller
 
     }
     
-    public function deleteAPI($id){
+    public function deleteAPI(Request $request, $id){
 
-        Log::info('Iniciando el proceso de eliminar categoria');
+        $user = $request->user();
+
 
         $categoria = Categorias::find($id);
         $categoria->delete();
 
-        Log::info('Proceso finalizado.');
+        Log::info(' El usuario '.$user->name.' con el rol '.$user->rol.' acaba de eliminar la categoria con el id '.$id);
+
         return "Ok";
 
     }

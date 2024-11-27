@@ -32,15 +32,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::post("login", [LoginController::class, 'login']);
-Route::get('/categories', [CategoriasController::class, 'indexAPI']);
-Route::post('/categories', [CategoriasController::class, 'storeAPI']);
-
-Route::get('/categories/{id}', action: [CategoriasController::class, 'getAPI']);
-
-Route::delete('/categories/{id}', [CategoriasController::class, 'deleteAPI']);
-Route::put('/categories/{id}', [CategoriasController::class, 'updateAPI']);
-
 Route::post('/register', [AuthController::class, 'register']);
+Route::middleware('auth:sanctum')->get('/getUser/{id}', [AuthController::class, 'getUserApi']);
+Route::middleware('auth:sanctum')->put('/getUser/{id}', [AuthController::class, 'updateAPI']);
+Route::middleware('auth:sanctum')->delete('/getUser/{id}', [AuthController::class, 'deleteAPI']);
+
+
+Route::middleware('auth:sanctum')->get('/categories', [CategoriasController::class, 'indexAPI']);
+Route::middleware('auth:sanctum')->post('/categories', [CategoriasController::class, 'storeAPI']);
+Route::middleware('auth:sanctum')->get('/categories/{id}', action: [CategoriasController::class, 'getAPI']);
+Route::middleware('auth:sanctum')->delete('/categories/{id}', [CategoriasController::class, 'deleteAPI']);
+Route::middleware('auth:sanctum')->put('/categories/{id}', [CategoriasController::class, 'updateAPI']);
+
 
 Route::middleware('auth:sanctum')->post('/gastos/create', [GastosController::class, 'storeAPI']);
 Route::middleware('auth:sanctum')->put('/gastos/{id}', [GastosController::class, 'updateAPI']);

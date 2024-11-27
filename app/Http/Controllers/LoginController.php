@@ -10,7 +10,6 @@ class LoginController extends Controller
 {
     public function login(Request $request)
     {
-        Log::info('Iniciando el proceso de autenticacion.');
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
@@ -23,7 +22,7 @@ class LoginController extends Controller
                 'nombreUsuario' => $user->name
             );
 
-             Log::info('Proceso finalizado. Autenticación realizada con exito');
+             Log::info('El usuario con el nombre de '.$user->name." con el rol de ".$user->rol." acaba de iniciar sesion en la plataforma");
 
             return json_encode($arr);
         } else {
@@ -34,7 +33,7 @@ class LoginController extends Controller
                 'idUsuario' => 0,
                 'nombreUsuario' => ''
             );
-            Log::info('Proceso finalizado. Autenticación fallida');
+            Log::info('Autenticación fallida');
 
             return json_encode($arr);
         }
