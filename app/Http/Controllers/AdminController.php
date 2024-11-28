@@ -17,6 +17,18 @@ class AdminController extends Controller
 
         return response()->json(['message' => 'Bienvenido, administrador'], 200);
     }
+
+    public function indexSecundary(Request $request)
+    {
+        $user = $request->user(); // Obtiene al usuario autenticado desde el token
+
+        // Verificar el rol del usuario
+        if ($user->rol === 'user') {
+            return response()->json(['message' => 'Acceso denegado. No eres administrador.'], 403);
+        }
+
+        return response()->json(['message' => 'Bienvenido, administrador'], 200);
+    }
 }
 
 

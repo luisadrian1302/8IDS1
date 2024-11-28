@@ -53,7 +53,9 @@ Route::middleware('auth:sanctum')->delete('/gastos/{id}', [GastosController::cla
 
 
 Route::middleware('auth:sanctum')->get('/verifyAdmin', [AdminController::class, 'index']);
+Route::middleware('auth:sanctum')->get('/verifyAdminSecundary', [AdminController::class, 'indexSecundary']);
 Route::middleware('auth:sanctum')->get('/getUsers', [UsuariosControler::class, 'indexAPI']);
 
 
 
+ 

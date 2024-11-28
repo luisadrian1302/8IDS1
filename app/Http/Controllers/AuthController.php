@@ -50,7 +50,9 @@ class AuthController extends Controller
         $id_user = $id;
 
         $user = $request->user();
-
+        if ($user->rol !== 'superadmin') {
+            return response()->json(['message' => 'Acceso denegado. No eres super administrador.'], 403);
+        }
 
         $userGet = User::where('id', $id_user)->first();
 
@@ -64,6 +66,10 @@ class AuthController extends Controller
 
         try {
             $user = $request->user();
+
+            if ($user->rol !== 'superadmin') {
+                return response()->json(['message' => 'Acceso denegado. No eres super administrador.'], 403);
+            }
 
 
             $userUpt = User::findOrFail($id);
@@ -102,7 +108,9 @@ class AuthController extends Controller
         try {
             $user = $request->user();
 
-
+            if ($user->rol !== 'superadmin') {
+                return response()->json(['message' => 'Acceso denegado. No eres super administrador.'], 403);
+            }
             $userUpt = User::find($id);
             $userUpt->delete();
 
